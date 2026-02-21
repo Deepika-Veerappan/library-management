@@ -26,29 +26,33 @@ function Login() {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "100px" }}>
+    <div className="login-container">
       <h2>Library Login</h2>
 
-      <select onChange={(e) => setForm({ ...form, role: e.target.value })}>
+      <select
+        value={form.role}
+        onChange={(e) => setForm({ ...form, role: e.target.value })}
+      >
         <option value="user">User</option>
         <option value="admin">Admin</option>
       </select>
-      <br /><br />
 
       <input
         placeholder="Email"
+        value={form.email}
         onChange={(e) => setForm({ ...form, email: e.target.value })}
       />
-      <br /><br />
 
       <input
         type="password"
         placeholder="Password"
+        value={form.password}
         onChange={(e) => setForm({ ...form, password: e.target.value })}
       />
-      <br /><br />
 
-      <button onClick={handleLogin}>Login</button>
+      <button className="btn-primary" onClick={handleLogin}>
+        Login
+      </button>
     </div>
   );
 }
