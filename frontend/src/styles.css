@@ -1,0 +1,176 @@
+/* ===== GLOBAL DARK THEME ===== */
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f172a;
+  color: #f1f5f9;
+}
+
+h2, h3 {
+  font-weight: 600;
+}
+
+.container {
+  padding: 40px;
+}
+
+/* ===== NAVBAR ===== */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: #1e293b;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.nav-links a {
+  margin-right: 20px;
+  text-decoration: none;
+  color: #cbd5e1;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: #38bdf8;
+}
+
+.logout-btn {
+  background: #ef4444;
+  border: none;
+  padding: 8px 16px;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background: #dc2626;
+}
+
+/* ===== CARD DESIGN ===== */
+
+.card {
+  background: #1e293b;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  margin-bottom: 20px;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* ===== TABLE DESIGN ===== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1e293b;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+th {
+  background: #334155;
+  padding: 12px;
+  text-align: left;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #334155;
+}
+
+tr:hover {
+  background: #273549;
+}
+
+/* ===== BADGES ===== */
+
+.badge-success {
+  background: #22c55e;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+
+.badge-warning {
+  background: #facc15;
+  padding: 4px 8px;
+  border-radius: 6px;
+  color: black;
+}
+
+/* ===== BUTTONS ===== */
+
+button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.btn-primary {
+  background: #3b82f6;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #2563eb;
+}
+
+.btn-success {
+  background: #22c55e;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #16a34a;
+}
+
+.btn-warning {
+  background: #facc15;
+  color: black;
+}
+
+.btn-danger {
+  background: #ef4444;
+  color: white;
+}
+
+/* ===== FORM INPUTS ===== */
+
+input, select {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #334155;
+  background: #0f172a;
+  color: white;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid #38bdf8;
+}
+
+/* ===== LOGIN PAGE CENTER ===== */
+
+.login-container {
+  width: 350px;
+  margin: 120px auto;
+  background: #1e293b;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+  text-align: center;
+}
