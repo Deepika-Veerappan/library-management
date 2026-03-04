@@ -1,21 +1,47 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import Home from "./pages/Home";
-import Explore from "./pages/Explore";
-import Profile from "./pages/Profile";
+import Register from "./pages/Register";
+import UserDashboard from "./pages/UserDashboard";
+import LibrarianDashboard from "./pages/LibrarianDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import PrivateRoute from "./components/PrivateRoute";
+import "./App.css";
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Login />} />
 
-        <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
-        <Route path="/explore" element={<PrivateRoute><Explore /></PrivateRoute>} />
-        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-        <Route path="/admin" element={<PrivateRoute><AdminDashboard /></PrivateRoute>} />
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        <Route
+          path="/home"
+          element={
+            <PrivateRoute allowedRoles={["user"]}>
+              <UserDashboard />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/librarian"
+          element={
+            <PrivateRoute allowedRoles={["librarian"]}>
+              <LibrarianDashboard />
+            </PrivateRoute>
+          }
+        />
+
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute allowedRoles={["admin"]}>
+              <AdminDashboard />
+            </PrivateRoute>
+          }
+        />
+
       </Routes>
     </Router>
   );
