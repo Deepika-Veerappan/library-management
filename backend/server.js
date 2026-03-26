@@ -3,9 +3,13 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const PORT = process.env.PORT || 5000;
 connectDB();
 const helmet = require("helmet");
 const app = express();
+app.get("/", (req, res) => {
+  res.send("Library Backend API is running successfully");
+});
 app.use(cors());
 app.use(express.json());
 app.use(helmet());
@@ -13,4 +17,6 @@ app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/books", require("./routes/bookRoutes"));
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/admin", require("./routes/adminRoutes"));
-app.listen(5000, () => console.log("Server running on port 5000"));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
