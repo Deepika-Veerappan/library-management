@@ -12,7 +12,10 @@ app.get("/", (req, res) => {
 });
 app.use(
   cors({
-    origin: "https://library-management-mzsz4s6z6-deepika-veerappans-projects.vercel.app",
+    origin: [
+      "https://library-management-k4l5tmpvr-deepika-veerappans-projects.vercel.app",
+      "https://library-management-mzsz4s6z6-deepika-veerappans-projects.vercel.app"
+    ],
     credentials: true
   })
 );
