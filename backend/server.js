@@ -10,7 +10,12 @@ const app = express();
 app.get("/", (req, res) => {
   res.send("Library Backend API is running successfully");
 });
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://library-management-mzsz4s6z6-deepika-veerappans-projects.vercel.app",
+    credentials: true
+  })
+);
 app.use(express.json());
 app.use(helmet());
 app.use("/api/auth", require("./routes/authRoutes"));
