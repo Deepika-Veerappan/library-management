@@ -22,7 +22,7 @@ function UserNavbar() {
     try {
 
       const res = await axios.get(
-        "http://localhost:5000/api/users/notifications",
+        "http://library-backend-faa2.onrender.com/api/users/notifications",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
@@ -62,7 +62,7 @@ function UserNavbar() {
     try {
 
       await axios.put(
-        `http://localhost:5000/api/users/notifications/${id}/read`,
+        `http://library-backend-faa2.onrender.com/api/users/notifications/${id}/read`,
         {},
         {
           headers:{

@@ -38,7 +38,7 @@ function LibrarianDashboard() {
     copies: 1,
   });
 
-  const API = "http://localhost:5000/api/books";
+  const API = "http://library-backend-faa2.onrender.com/api/books";
   const token = localStorage.getItem("token");
 
   const config = {
