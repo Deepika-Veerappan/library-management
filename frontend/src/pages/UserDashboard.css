@@ -1,0 +1,217 @@
+/* DASHBOARD TITLE BAR */
+
+.dashboard-title-bar{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  padding:20px 30px;
+}
+
+
+.dashboard-heading{
+  color:#4fc3ff;
+  text-align:center;
+}
+
+/* PAGE CONTENT */
+
+.page-content{
+  padding:30px;
+  margin-left:40px;
+  transition:0.3s;
+}
+
+.page-content.shift{
+  margin-left:300px;
+}
+
+
+/* ---------------- SIDEBAR ---------------- */
+
+.sidebar{
+
+  position:fixed;
+
+  top:150px;
+
+  left:-260px;
+
+  width:250px;
+
+  height:calc(100vh - 150px);
+
+  background:#081a2f;
+
+  border-radius:12px;
+
+  padding-top:25px;
+
+  transition:0.3s;
+
+  box-shadow:0 0 20px rgba(0,180,255,0.4);
+}
+
+/* OPEN */
+
+.sidebar.open{
+  left:20px;
+}
+
+/* BUTTONS */
+
+.sidebar button{
+
+  width:85%;
+
+  margin:15px auto;
+
+  display:block;
+
+  padding:12px;
+
+  background:transparent;
+
+  color:white;
+
+  border:none;
+
+  border-radius:10px;
+
+  text-align:left;
+
+  font-size:16px;
+
+  cursor:pointer;
+}
+
+/* ACTIVE */
+
+.sidebar button.active{
+
+  border:1px solid #4fc3ff;
+
+  box-shadow:0 0 15px #4fc3ff;
+
+  background:rgba(79,195,255,0.1);
+}
+
+/* HOVER */
+
+.sidebar button:hover{
+
+  border:1px solid #4fc3ff;
+
+  box-shadow:0 0 10px #4fc3ff;
+}
+
+
+/* ---------------- TABLE ---------------- */
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  background:#13263f;
+}
+
+th{
+  background:#2e4a6b;
+  color:#4fc3ff;
+  padding:14px;
+  text-align:left;
+}
+
+td{
+  padding:14px;
+  border-top:1px solid rgba(255,255,255,0.1);
+}
+
+tr:hover{
+  background:#1d3557;
+}
+
+
+/* NO BOOKS MESSAGE */
+
+.no-books{
+  text-align:center;
+  padding:40px;
+  font-size:18px;
+  color:white;
+}
+
+
+/* ---------------- EXPLORE ---------------- */
+
+.book-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+  gap:20px;
+}
+
+.book-card{
+  background:#13263f;
+  padding:20px;
+  border-radius:10px;
+  box-shadow:0 0 10px rgba(0,180,255,0.4);
+}
+.menu-box {
+  position: absolute;
+  left: 25px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #111;
+  border: 1px solid #4fc3f7;
+  z-index: 1000;
+}
+
+/* Icon style */
+.menu-icon {
+  font-size: 22px;
+  color: #4fc3f7;
+}
+/* POPULAR BOOKS */
+
+.popular-container{
+  margin-top:30px;
+}
+
+.section-title{
+  color:#2aa3ff;
+  margin-bottom:20px;
+}
+
+/* GRID */
+
+.popular-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:25px;
+}
+
+/* BOOK CARD */
+
+.popular-card{
+  background:#081a2f;
+  padding:20px;
+  border-radius:10px;
+  color:white;
+  box-shadow:0 0 15px rgba(0,180,255,0.4);
+  transition:0.3s;
+}
+
+.popular-card:hover{
+  transform:scale(1.03);
+  box-shadow:0 0 20px rgba(0,180,255,0.7);
+}
+
+.popular-card h3{
+  color:#4fc3ff;
+  margin-bottom:10px;
+}

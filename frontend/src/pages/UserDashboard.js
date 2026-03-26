@@ -1,51 +1,300 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import API from "../api";
-import Navbar from "../components/Navbar";
+import UserNavbar from "../components/UserNavbar";
+import "./UserDashboard.css";
 
 function UserDashboard() {
-  const [borrows, setBorrows] = useState([]);
 
-  useEffect(() => {
-    const fetchBorrows = async () => {
-      const res = await API.get("/users/profile", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
-      });
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [activePage, setActivePage] = useState("home");
 
-      setBorrows(res.data.borrowHistory || []);
-    };
+  const [books, setBooks] = useState([]);
+  const [allBooks, setAllBooks] = useState([]);
+  const [popularBooks, setPopularBooks] = useState([]);
 
-    fetchBorrows();
-  }, []);
+  /* ---------------- HOME BOOKS ---------------- */
 
-  return (
-    <>
-      <Navbar />
-      <div className="container">
-        <h2>My Borrowed Books</h2>
+  const fetchBooks = async () => {
 
-        <table>
-          <thead>
-            <tr>
-              <th>Book</th>
-              <th>Due Date</th>
-              <th>Status</th>
-              <th>Fine</th>
-            </tr>
-          </thead>
-          <tbody>
-            {borrows.map((b) => (
-              <tr key={b._id}>
-                <td>{b.book?.name}</td>
-                <td>{new Date(b.dueDate).toLocaleDateString()}</td>
-                <td>{b.status}</td>
-                <td>₹{b.fineAmount || 0}</td>
+    const res = await API.get("/users/my-books", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`
+      }
+    });
+
+    setBooks(res.data);
+  };
+
+  /* ---------------- ALL BOOKS ---------------- */
+
+  const fetchAllBooks = async () => {
+
+    const res = await API.get("/books");
+
+    setAllBooks(res.data);
+
+    let sorted = [...res.data].sort((a,b)=> b.totalBorrows - a.totalBorrows);
+
+    let popular = [];
+    let rank = 1;
+    let prevIssued = null;
+
+    for(let i=0;i<sorted.length;i++){
+
+      let book = sorted[i];
+
+      if(prevIssued === null){
+        popular.push(book);
+        prevIssued = book.totalBorrows;
+      }
+
+      else if(book.totalBorrows === prevIssued){
+        popular.push(book);
+      }
+
+      else{
+
+        rank++;
+
+        if(rank > 5) break;
+
+        popular.push(book);
+        prevIssued = book.totalBorrows;
+      }
+    }
+
+    setPopularBooks(popular);
+  };
+
+
+  /* ---------------- USE EFFECT ---------------- */
+
+  useEffect(()=>{
+
+    fetchBooks();
+    fetchAllBooks();
+
+  },[]);
+
+const calculateFine = (dueDate) => {
+
+  const today = new Date();
+  const due = new Date(dueDate);
+
+  const diffTime = today - due;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  return diffDays > 0 ? diffDays * 10 : 0;
+};
+  /* ---------------- PAGE RENDER ---------------- */
+
+  const renderPage = () => {
+
+    /* ---------- HOME ---------- */
+
+    if(activePage==="home"){
+
+      return(
+
+        <div className="table-container">
+
+          <table>
+
+            <thead>
+              <tr>
+                <th>Book</th>
+                <th>Due Date</th>
+                <th>Status</th>
+                <th>Fine</th>
               </tr>
+            </thead>
+
+            <tbody>
+
+              {books.length === 0 ? (
+
+                <tr>
+                  <td colSpan="4" className="no-books">
+                    No books were borrowed
+                  </td>
+                </tr>
+
+              ) : (
+
+                books.map((b)=>{
+
+                  const fine = b.status === "Issued"
+  ? calculateFine(b.dueDate)
+  : 0;
+
+                  return(
+
+                    <tr key={b._id}>
+
+                      <td>{b.book?.title}</td>
+
+                      <td>
+                        {new Date(b.dueDate).toLocaleDateString()}
+                      </td>
+
+                      <td>
+                        {b.status==="Returned"
+                          ? "Returned"
+                          : "Not Returned"}
+                      </td>
+
+                      <td>₹ {fine}</td>
+
+                    </tr>
+
+                  )
+                })
+
+              )}
+
+            </tbody>
+
+          </table>
+
+        </div>
+
+      )
+    }
+
+
+    /* ---------- EXPLORE ---------- */
+
+    if(activePage==="explore"){
+
+      return(
+
+        <div className="explore-page">
+
+          <h2>Explore Books</h2>
+
+          <div className="book-grid">
+
+            {allBooks.map((b)=>(
+              <div key={b._id} className="book-card">
+
+                <h3>{b.title}</h3>
+
+                <p><b>ID:</b> {b.bookId}</p>
+
+                <p>{b.description}</p>
+
+              </div>
             ))}
-          </tbody>
-        </table>
+
+          </div>
+
+        </div>
+
+      )
+    }
+
+
+    /* ---------- POPULAR ---------- */
+
+    if(activePage==="popular"){
+
+      return(
+
+        <div className="popular-container">
+
+          <h2 className="section-title">Top Issued Books</h2>
+
+          <div className="popular-grid">
+
+            {popularBooks.map((b,index)=>(
+
+              <div key={b._id} className="popular-card">
+
+                <h3>{b.title}</h3>
+
+                <p><b>Book ID:</b> {b.bookId}</p>
+
+                <p><b>Author:</b> {b.author}</p>
+
+                <p><b>Total Issued:</b> {b.totalBorrows}</p>
+
+              </div>
+
+            ))}
+
+          </div>
+
+        </div>
+
+      )
+    }
+
+  };
+
+
+  return(
+
+    <div className="dashboard-container">
+
+      {/* NAVBAR */}
+      <UserNavbar />
+
+      {/* TITLE BAR */}
+
+      <div className="dashboard-title-bar">
+
+        <div
+          className={`menu-box ${sidebarOpen ? "active" : ""}`}
+          onClick={()=>setSidebarOpen(!sidebarOpen)}
+        >
+         <span className="menu-icon">☰</span>
+        </div>
+
+        <h1 className="dashboard-heading">
+          User Dashboard
+        </h1>
+
       </div>
-    </>
-  );
+
+
+      {/* SIDEBAR */}
+
+      <div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+
+        <button
+          className={activePage==="home" ? "active" : ""}
+          onClick={()=>setActivePage("home")}
+        >
+          Home
+        </button>
+
+        <button
+          className={activePage==="explore" ? "active" : ""}
+          onClick={()=>setActivePage("explore")}
+        >
+          Explore
+        </button>
+
+        <button
+          className={activePage==="popular" ? "active" : ""}
+          onClick={()=>setActivePage("popular")}
+        >
+          Popular Books
+        </button>
+
+      </div>
+
+
+      {/* CONTENT */}
+
+      <div className={`page-content ${sidebarOpen ? "shift" : ""}`}>
+        {renderPage()}
+      </div>
+
+    </div>
+
+  )
+
 }
 
 export default UserDashboard;

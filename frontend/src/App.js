@@ -16,7 +16,7 @@ function App() {
         <Route path="/register" element={<Register />} />
 
         <Route
-          path="/home"
+          path="/user"
           element={
             <PrivateRoute allowedRoles={["user"]}>
               <UserDashboard />

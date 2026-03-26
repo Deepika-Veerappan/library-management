@@ -101,6 +101,12 @@
 .content-area {
   flex: 1;
   padding: 40px 50px;
+  margin-left: 0;
+  transition: margin-left 0.3s ease;
+}
+
+.content-area.shift {
+  margin-left: 260px;
 }
 
 .dashboard-title {
@@ -627,10 +633,22 @@ td:last-child .delete-btn {
   background: linear-gradient(180deg, #0f172a, #111827);
   padding: 25px 15px;
   border-radius: 16px;
+
+  position: fixed;
+  left: 0;
+  top: 140px;
+
+  transform: translateX(-260px);   /* hidden */
+  transition: transform 0.3s ease;
+
   box-shadow:
     0 0 20px rgba(56, 189, 248, 0.25),
     0 15px 40px rgba(0, 0, 0, 0.8);
-  animation: slideInSidebar 0.3s ease;
+}
+
+/* when open */
+.sidebar.open {
+  transform: translateX(0);
 }
 /* ===== NAV ITEMS ===== */
 .nav-item {

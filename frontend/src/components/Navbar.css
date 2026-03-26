@@ -1,0 +1,123 @@
+/* HEADER */
+
+.top-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:12px 20px;
+  background:#111;
+  color:white;
+}
+
+/* RIGHT SIDE */
+
+.nav-right{
+  display:flex;
+  align-items:center;
+  gap:20px;
+}
+
+/* BELL ICON */
+
+.notification-wrapper{
+  position:relative;
+  cursor:pointer;
+}
+
+.bell-icon{
+  font-size:22px;
+  color:white;
+}
+
+/* RED DOT ON BELL */
+
+.notification-dot{
+  position:absolute;
+  top:-3px;
+  right:-3px;
+  width:10px;
+  height:10px;
+  background:red;
+  border-radius:50%;
+}
+
+/* NOTIFICATION DROPDOWN */
+
+.notification-box{
+  position:absolute;
+  top:35px;
+  right:0;
+  width:260px;
+  max-height:300px;
+  overflow-y:auto;
+  background:white;
+  border-radius:6px;
+  padding:8px 0;
+  box-shadow:0px 4px 10px rgba(0,0,0,0.2);
+  color:black;
+  z-index:1000;
+}
+
+/* EACH NOTIFICATION */
+
+.notification-item{
+  display:flex;
+  align-items:center;
+  padding:8px 12px;
+  font-size:14px;
+  cursor:pointer;
+}
+
+/* HOVER EFFECT */
+
+.notification-item:hover{
+  background:#f3f3f3;
+}
+
+/* RED DOT BESIDE MESSAGE */
+
+.msg-dot{
+  width:8px;
+  height:8px;
+  background:red;
+  border-radius:50%;
+  margin-right:8px;
+  flex-shrink:0;
+}
+
+/* NO NOTIFICATION TEXT */
+
+.no-notification{
+  text-align:center;
+  color:gray;
+  padding:10px;
+}
+
+/* LOGOUT BUTTON */
+
+.logout-btn{
+  padding:6px 12px;
+  border:none;
+  background:#ff4d4d;
+  color:white;
+  border-radius:4px;
+  cursor:pointer;
+}
+
+.logout-btn:hover{
+  background:#e60000;
+}
+.notification-box{
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+@keyframes fadeIn{
+  from{
+    opacity:0;
+    transform:translateY(-5px);
+  }
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+}

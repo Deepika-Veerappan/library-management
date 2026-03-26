@@ -1,10 +1,25 @@
 const express = require("express");
 const Book = require("../models/Book");
 const Borrow = require("../models/Borrow");
+const Notification = require("../models/Notification");
+
 const { protect, authorize } = require("../middleware/authMiddleware");
 
 const router = express.Router();
+/* Get Top 3 Popular Books */
+router.get("/popular", async (req, res) => {
+  try {
 
+    const books = await Book.find()
+      .sort({ totalBorrows: -1 }) // or borrowCount if you have it
+      .limit(3);
+
+    res.json(books);
+
+  } catch (error) {
+    res.status(500).json({ message: "Failed to fetch popular books" });
+  }
+});
 /* ===============================
    GET ALL BOOKS
 ================================ */
@@ -244,27 +259,26 @@ router.get("/nonreturned", protect, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-// POST /api/books/send-reminder/:id
-// POST /api/books/send-reminder/:id
-router.post("/send-reminder/:id", protect, authorize("librarian"), async (req, res) => {
+router.post("/send-reminder/:id", protect, async (req, res) => {
+
   try {
+
     const borrow = await Borrow.findById(req.params.id).populate("book");
 
     if (!borrow) {
-      return res.status(404).json({ message: "Record not found" });
+      return res.status(404).json({ message: "Borrow record not found" });
     }
 
-    // For now, just simulate reminder
-    console.log(
-      `Reminder sent to ${borrow.userEmail} for Book ID ${borrow.book.bookId}`
-    );
+    await Notification.create({
+      userEmail: borrow.userEmail,
+      message: `Reminder: Book ${borrow.book.bookId} has exceeded the due date`
+    });
 
     res.json({ message: "Reminder sent successfully" });
 
-  } catch (err) {
-    console.log("REMINDER ERROR:", err);
-    res.status(500).json({ message: "Server error" });
+  } catch (error) {
+    res.status(500).json({ message: "Reminder failed" });
   }
-});
 
+});
 module.exports = router;

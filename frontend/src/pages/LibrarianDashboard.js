@@ -320,37 +320,42 @@ const remainingTrackingBooks = rankedBooks.filter(book => book.rank > 3);
 
       <div className="main-layout">
         {/* SIDEBAR (TOGGLE ADDED) */}
-        {sidebarOpen && (
-          <div className="sidebar">
-            <div
-              className={`nav-item ${activeTab === "books" ? "active" : ""}`}
-              onClick={() => setActiveTab("books")}
-            >
-              Books
-            </div>
-            <div
-              className={`nav-item ${activeTab === "issues" ? "active" : ""}`}
-              onClick={() => setActiveTab("issues")}
-            >
-              Issue Books
-            </div>
-            <div
-              className={`nav-item ${activeTab === "nonreturned" ? "active" : ""}`}
-              onClick={() => setActiveTab("nonreturned")}
-            >
-              Non-Returned Books
-            </div>
-            <div
-              className={`nav-item ${activeTab === "tracking" ? "active" : ""}`}
-              onClick={() => setActiveTab("tracking")}
-            >
-              Book Tracking
-            </div>
-          </div>
-        )}
+        {/* SIDEBAR */}
+<div className={`sidebar ${sidebarOpen ? "open" : ""}`}>
+
+  <div
+    className={`nav-item ${activeTab === "books" ? "active" : ""}`}
+    onClick={() => setActiveTab("books")}
+  >
+    Books
+  </div>
+
+  <div
+    className={`nav-item ${activeTab === "issues" ? "active" : ""}`}
+    onClick={() => setActiveTab("issues")}
+  >
+    Issue Books
+  </div>
+
+  <div
+    className={`nav-item ${activeTab === "nonreturned" ? "active" : ""}`}
+    onClick={() => setActiveTab("nonreturned")}
+  >
+    Non-Returned Books
+  </div>
+
+  <div
+    className={`nav-item ${activeTab === "tracking" ? "active" : ""}`}
+    onClick={() => setActiveTab("tracking")}
+  >
+    Book Tracking
+  </div>
+
+</div>
+
 
         {/* CONTENT AREA (UNCHANGED) */}
-        <div className="content-area">
+       <div className={`content-area ${sidebarOpen ? "shift" : ""}`}>
           {/* ===== DASHBOARD STATS BOXES ===== */}
           {/* ALL YOUR EXISTING TABS BELOW — NO CHANGES */}
           {/* BOOKS TAB */}
