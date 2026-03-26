@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const API = axios.create({
-  baseURL: "http://library-backend-faa2.onrender.com/api",
+  baseURL: "https://library-backend-faa2.onrender.com/api",
 });
 
 API.interceptors.request.use((req) => {

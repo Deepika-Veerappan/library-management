@@ -38,7 +38,7 @@ function LibrarianDashboard() {
     copies: 1,
   });
 
-  const API = "http://library-backend-faa2.onrender.com/api/books";
+  const API = "https://library-backend-faa2.onrender.com/api/books";
   const token = localStorage.getItem("token");
 
   const config = {
@@ -71,6 +71,7 @@ function LibrarianDashboard() {
     fetchBooks();
     fetchIssuedBooks();
     fetchNonReturnedBooks();
+    // eslint-disable-next-line
   }, []);
   useEffect(() => {
     setCurrentPage(1);
@@ -202,7 +203,7 @@ function LibrarianDashboard() {
 
   const handleIssueSubmit = async () => {
     try {
-      const res = await axios.post(`${API}/issue`, issueData, config);
+      await axios.post(`${API}/issue`, issueData, config);
       showSuccess("Book Issued Successfully");
       setShowIssueModal(false);
       await fetchNonReturnedBooks();
