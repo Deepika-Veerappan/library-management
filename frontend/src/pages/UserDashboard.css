@@ -145,15 +145,46 @@ tr:hover{
 
 .book-grid{
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-  gap:20px;
+  grid-template-columns:repeat(2,1fr);
+  gap:30px;
 }
+
+/* CARD */
 
 .book-card{
   background:#13263f;
-  padding:20px;
-  border-radius:10px;
-  box-shadow:0 0 10px rgba(0,180,255,0.4);
+  padding:25px;
+  border-radius:14px;
+  border:1px solid rgba(79,195,255,0.2);
+  transition:all 0.3s ease;
+  position:relative;
+}
+
+/* TITLE */
+
+.book-card h3{
+  font-size:22px;
+  margin-bottom:12px;
+  color:#ffffff;
+}
+
+/* TEXT */
+
+.book-card p{
+  color:#b8dcff;
+  font-size:15px;
+  line-height:1.6;
+}
+
+/* HOVER GLOW */
+
+.book-card:hover{
+  transform:translateY(-6px);
+  border:1px solid #4fc3ff;
+  box-shadow:
+    0 0 10px #4fc3ff,
+    0 0 20px rgba(79,195,255,0.7),
+    0 0 35px rgba(79,195,255,0.4);
 }
 .menu-box {
   position: absolute;
