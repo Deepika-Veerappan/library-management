@@ -80,31 +80,45 @@ router.get("/dashboard-stats", protect, authorize("admin"), async (req, res) => 
     res.status(500).json({ message: "Failed to load dashboard stats" });
   }
 });
-router.get("/tracking/users-engaged", async (req, res) => {
+router.get("/dashboard-stats", protect, authorize("admin"), async (req, res) => {
   try {
-    const data = await Borrow.aggregate([
-      {
-        $group: {
-          _id: {
-            month: { $month: "$issueDate" },
-            year: { $year: "$issueDate" }
-          },
-          users: { $addToSet: "$userEmail" }
-        }
-      },
-      {
-        $project: {
-          month: "$_id.month",
-          year: "$_id.year",
-          engagedUsers: { $size: "$users" }
-        }
-      },
-      { $sort: { year: 1, month: 1 } }
+    const totalUsers = await User.countDocuments({ role: "user" });
+    const totalLibrarians = await User.countDocuments({ role: "librarian" });
+    const totalBooks = await Book.countDocuments();
+
+    // Total issued books (sum of copiesIssued)
+    const issuedData = await Borrow.aggregate([
+      { $match: { status: "Issued" } },
+      { $group: { _id: null, total: { $sum: "$copiesIssued" } } }
     ]);
 
-    res.json(data);
+    const issuedBooks = issuedData[0]?.total || 0;
+
+    // Overdue books (sum of copiesIssued)
+    const today = new Date();
+
+    const overdueData = await Borrow.aggregate([
+      {
+        $match: {
+          status: "Issued",
+          dueDate: { $lt: today }
+        }
+      },
+      { $group: { _id: null, total: { $sum: "$copiesIssued" } } }
+    ]);
+
+    const overdueBooks = overdueData[0]?.total || 0;
+
+    res.json({
+      totalUsers,
+      totalLibrarians,
+      totalBooks,
+      issuedBooks,
+      overdueBooks
+    });
+
   } catch (err) {
-    res.status(500).json({ message: "User tracking error" });
+    res.status(500).json({ message: "Failed to load dashboard stats" });
   }
 });
 router.get("/tracking/books-issued", async (req, res) => {
