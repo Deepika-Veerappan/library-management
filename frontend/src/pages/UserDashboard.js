@@ -198,36 +198,40 @@ const calculateFine = (dueDate) => {
 
     if(activePage==="popular"){
 
-      return(
+  return(
 
-        <div className="popular-container">
+    <div className="popular-container">
 
-          <h2 className="section-title">Top Issued Books</h2>
+      <h2 className="section-title">
+        🏆 Top 3 Most Issued Books
+      </h2>
 
-          <div className="popular-grid">
+      <div className="popular-grid">
 
-            {popularBooks.map((b,index)=>(
+        {popularBooks.slice(0,3).map((b,index)=>(
 
-              <div key={b._id} className="popular-card">
+          <div key={b._id} className="popular-card">
 
-                <h3>{b.title}</h3>
+            <div className="book-id">{b.bookId}</div>
 
-                <p><b>Book ID:</b> {b.bookId}</p>
+            <div className="rank">#{index+1}</div>
 
-                <p><b>Author:</b> {b.author}</p>
+            <h3>{b.title}</h3>
 
-                <p><b>Total Issued:</b> {b.totalBorrows}</p>
-
-              </div>
-
-            ))}
+            <div className="total-issued">
+              Total Issued: {b.totalBorrows}
+            </div>
 
           </div>
 
-        </div>
+        ))}
 
-      )
-    }
+      </div>
+
+    </div>
+
+  )
+}
 
   };
 
