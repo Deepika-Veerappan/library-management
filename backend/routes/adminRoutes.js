@@ -61,20 +61,32 @@ router.get("/dashboard-stats", protect, authorize("admin"), async (req, res) => 
     const totalUsers = await User.countDocuments({ role: "user" });
     const totalLibrarians = await User.countDocuments({ role: "librarian" });
 
-    // Total book copies in library
+    // total book copies
     const booksData = await Book.aggregate([
-      { $group: { _id: null, total: { $sum: "$quantity" } } }
+      {
+        $project: {
+          totalCopies: { $add: ["$availableCopies", "$activeIssued"] }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          total: { $sum: "$totalCopies" }
+        }
+      }
     ]);
+
     const totalBooks = booksData[0]?.total || 0;
 
-    // Issued books (copies)
+    // issued books
     const issuedData = await Borrow.aggregate([
       { $match: { status: "Issued" } },
       { $group: { _id: null, total: { $sum: "$copiesIssued" } } }
     ]);
+
     const issuedBooks = issuedData[0]?.total || 0;
 
-    // Overdue books (copies)
+    // overdue books
     const today = new Date();
 
     const overdueData = await Borrow.aggregate([
