@@ -55,31 +55,7 @@ router.put("/users/:id", protect, authorize("admin"), async (req, res) => {
 
   res.json({ message: "User updated successfully" });
 });
-router.get("/dashboard-stats", protect, authorize("admin"), async (req, res) => {
-  try {
-    const totalUsers = await User.countDocuments({ role: "user" });
-    const totalLibrarians = await User.countDocuments({ role: "librarian" });
-    const totalBooks = await Book.countDocuments();
-    const issuedBooks = await Borrow.countDocuments({ status: "Issued" });
 
-    // Overdue logic (if you have dueDate field)
-    const today = new Date();
-    const overdueBooks = await Borrow.countDocuments({
-      status: "Issued",
-      dueDate: { $lt: today }
-    });
-
-    res.json({
-      totalUsers,
-      totalLibrarians,
-      totalBooks,
-      issuedBooks,
-      overdueBooks
-    });
-  } catch (err) {
-    res.status(500).json({ message: "Failed to load dashboard stats" });
-  }
-});
 router.get("/dashboard-stats", protect, authorize("admin"), async (req, res) => {
   try {
     const totalUsers = await User.countDocuments({ role: "user" });
