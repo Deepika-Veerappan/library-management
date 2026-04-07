@@ -15,7 +15,8 @@ app.use(
     origin: [
       "http://localhost:3000",
       "https://library-management-k4l5tmpvr-deepika-veerappans-projects.vercel.app",
-      "https://library-management-mzsz4s6z6-deepika-veerappans-projects.vercel.app"
+      "https://library-management-mzsz4s6z6-deepika-veerappans-projects.vercel.app",
+      "https://library-management-46uxwcboo-deepika-veerappans-projects.vercel.app"
     ],
     credentials: true
   })
